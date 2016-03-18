@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Respond to a parsed message failing authentification.
  *
@@ -6,17 +7,18 @@
  *   The mail message Feeds was trying to parse.
  */
 function mailauthfail_mailhandler_auth_failed($message) {
+  global $base_url;
+  $link = $base_url;
   // Send mail on fail
-  mailauthfail_drupal_mail('default_from', get_toaddress($message), 'Ukendt bruger ved ' . variable_get('site_name', 'os'), 'Hej, du er ikke oprettet som bruger hos ved '.variable_get('site_name', 'os').'<br>
-      ' .$base_url);
+  mailauthfail_drupal_mail('default_from', get_toaddress($message), 'Ukendt bruger ved Digital Formidling', 'Hej<br><br>Du er ikke oprettet som bruger ved <a href=' . $link . '>' . $link . '</a><br>');
 }
 
-    /**
-   * Return the "to address" from the headers. Note: will not return "toad dress".
-   * 
-   * @param $message
-   *   the message retrieved by Mailhandler
-   */
+/**
+ * Return the "to address" from the headers. Note: will not return "toad dress".
+ *
+ * @param $message
+ *   the message retrieved by Mailhandler
+ */
  function get_toaddress($message) {
     $toaddress = '';
     if (isset($message['header'])) {
@@ -31,8 +33,8 @@ function mailauthfail_mailhandler_auth_failed($message) {
     }
     return strtolower($toaddress);
   }
-  
-  /* * 
+
+/**
  * Simple wrapper function for drupal_mail() to avoid extraneous code.
  */
 function mailauthfail_drupal_mail($from = 'default_from', $to, $subject, $message) {
