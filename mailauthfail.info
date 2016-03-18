@@ -1,0 +1,5 @@
+name = "Mail auth fail"
+description = "Send email when a user is not registered in the system."
+core = "7.x"
+
+
